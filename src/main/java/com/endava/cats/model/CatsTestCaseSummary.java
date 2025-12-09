@@ -22,6 +22,8 @@ public class CatsTestCaseSummary implements Comparable<CatsTestCaseSummary> {
     private double timeToExecuteInSec;
     private String httpMethod;
     @EqualsAndHashCode.Exclude
+    private String expectedResult;
+    @EqualsAndHashCode.Exclude
     private String curl;
     private boolean switchedResult;
 
@@ -36,6 +38,7 @@ public class CatsTestCaseSummary implements Comparable<CatsTestCaseSummary> {
         summary.id = testCase.getTestId();
         summary.scenario = testCase.getScenario();
         summary.result = testCase.getResult();
+        summary.expectedResult = testCase.getExpectedResult();
         summary.fuzzer = testCase.getFuzzer();
         summary.path = testCase.getContractPath();
         summary.resultReason = testCase.getResultReason();
