@@ -21,6 +21,8 @@ public class CatsTestCaseSummary implements Comparable<CatsTestCaseSummary> {
     private String resultDetails;
     private double timeToExecuteInSec;
     private String httpMethod;
+    @EqualsAndHashCode.Exclude
+    private String curl;
     private boolean switchedResult;
 
     /**
@@ -40,6 +42,7 @@ public class CatsTestCaseSummary implements Comparable<CatsTestCaseSummary> {
         summary.resultDetails = testCase.getResultDetails();
         summary.timeToExecuteInSec = testCase.getResponse().getResponseTimeInMs() / 1000d;
         summary.httpMethod = testCase.getRequest().getHttpMethod().toLowerCase(Locale.ROOT);
+        summary.curl = testCase.getCurl();
         summary.switchedResult = testCase.getResultIgnoreDetails() != null;
 
         return summary;
