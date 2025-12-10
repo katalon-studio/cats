@@ -167,14 +167,20 @@ public class CatsTestCase {
         StringBuilder headersString = new StringBuilder();
         String body = "";
         if (request.getHeaders() != null) {
-            request.getHeaders().forEach(header -> headersString.append(CURL_HEADER.formatted(header.getKey(), this.getHeaderValueForCurl(header))));
+            request.getHeaders().stream()
+                    .filter(header -> !"User-Agent".equalsIgnoreCase(header.getKey()))
+                    .forEach(header -> {
+                        Object value = this.getHeaderValueForCurl(header);
+                        headersString.append(CURL_HEADER.formatted(header.getKey(), value));
+                    });
         }
 
-        if (com.endava.cats.http.HttpMethod.fromString(request.getHttpMethod()).map(com.endava.cats.http.HttpMethod::requiresBody).orElse(false)) {
+        if (HttpMethod.fromString(request.getHttpMethod()).map(HttpMethod::requiresBody).orElse(false)) {
             body = CURL_BODY.formatted(request.getPayload());
         }
 
-        String url = fullRequestPath != null ? fullRequestPath : request.getUrl();
+        String baseUrl = fullRequestPath != null ? fullRequestPath : request.getUrl();
+        String url = baseUrl != null ? baseUrl.replace("/cats/", "/ai/") : "";
         return CURL_TEMPLATE.formatted(request.getHttpMethod(), headersString.toString(), body, url);
     }
 
