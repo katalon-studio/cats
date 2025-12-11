@@ -4,6 +4,8 @@ import io.quarkus.test.junit.QuarkusTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 @QuarkusTest
 class CatsTestCaseSummaryTest {
 
@@ -14,8 +16,14 @@ class CatsTestCaseSummaryTest {
         testCase1.setTestId("ID1");
         testCase2.setTestId("JD1");
 
+        testCase1.setExpectedResult("expected");
         testCase1.setResponse(CatsResponse.empty());
-        testCase1.setRequest(CatsRequest.builder().httpMethod("POST").build());
+        testCase1.setRequest(CatsRequest.builder().httpMethod("POST").headers(List.of()).build());
+
+        testCase2.setExpectedResult("expected");
+        testCase2.setResponse(CatsResponse.empty());
+        testCase2.setRequest(CatsRequest.builder().httpMethod("POST").headers(List.of()).build());
+
         CatsTestCaseSummary summary1 = CatsTestCaseSummary.fromCatsTestCase(testCase1);
         CatsTestCaseSummary summary2 = CatsTestCaseSummary.fromCatsTestCase(testCase2);
 
@@ -26,8 +34,9 @@ class CatsTestCaseSummaryTest {
     void givenTwoTestCaseSummaryInstancesWithTheSameDetails_whenComparingThem_thenTheyAreEqual() {
         CatsTestCase testCase1 = new CatsTestCase();
         testCase1.setTestId("ID1");
+        testCase1.setExpectedResult("expected");
         testCase1.setResponse(CatsResponse.empty());
-        testCase1.setRequest(CatsRequest.builder().httpMethod("POST").build());
+        testCase1.setRequest(CatsRequest.builder().httpMethod("POST").headers(List.of()).build());
         CatsTestCaseSummary summary1 = CatsTestCaseSummary.fromCatsTestCase(testCase1);
         CatsTestCaseSummary summary2 = CatsTestCaseSummary.fromCatsTestCase(testCase1);
 
@@ -41,11 +50,13 @@ class CatsTestCaseSummaryTest {
         testCase2.setTestId("ID2");
         testCase1.setTestId("ID1");
 
+        testCase1.setExpectedResult("expected");
         testCase1.setResponse(CatsResponse.empty());
-        testCase1.setRequest(CatsRequest.builder().httpMethod("POST").build());
+        testCase1.setRequest(CatsRequest.builder().httpMethod("POST").headers(List.of()).build());
 
+        testCase2.setExpectedResult("expected");
         testCase2.setResponse(CatsResponse.empty());
-        testCase2.setRequest(CatsRequest.builder().httpMethod("POST").build());
+        testCase2.setRequest(CatsRequest.builder().httpMethod("POST").headers(List.of()).build());
         CatsTestCaseSummary summary1 = CatsTestCaseSummary.fromCatsTestCase(testCase1);
         CatsTestCaseSummary summary2 = CatsTestCaseSummary.fromCatsTestCase(testCase2);
 
