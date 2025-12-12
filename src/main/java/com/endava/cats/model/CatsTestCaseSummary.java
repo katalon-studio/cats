@@ -11,9 +11,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Represents a summary of a CATS test case.
- * This summary includes information such as test case status, path, and execution time.
- */
+* Represents a summary of a CATS test case.
+* This summary includes information such as test case status, path, and execution time.
+*/
 @EqualsAndHashCode
 @Getter
 public class CatsTestCaseSummary implements Comparable<CatsTestCaseSummary> {
@@ -29,6 +29,7 @@ public class CatsTestCaseSummary implements Comparable<CatsTestCaseSummary> {
     private double timeToExecuteInSec;
     private String httpMethod;
     private boolean switchedResult;
+    private String response;
 
     /**
      * Creates a CatsTestCaseSummary object from a CatsTestCase.
@@ -55,6 +56,7 @@ public class CatsTestCaseSummary implements Comparable<CatsTestCaseSummary> {
         String method = request.getHttpMethod();
         summary.httpMethod = method == null ? "####" : method.toLowerCase(Locale.ROOT);
         summary.switchedResult = testCase.getResultIgnoreDetails() != null;
+        summary.response = response.getBody() != null ? response.getBody().substring(0, Math.min(response.getBody().length(), 500)) : null;
 
         return summary;
     }
